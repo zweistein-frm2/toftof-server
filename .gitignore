@@ -1,0 +1,8 @@
+.vs/
+*.snap
+stage/
+parts/
+prime/
+out/
+snap/
+
