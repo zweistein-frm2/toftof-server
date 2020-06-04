@@ -14,21 +14,27 @@ target_link_libraries(${PROJECT_NAME} PUBLIC dyad)
 target_link_options(${PROJECT_NAME}  PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wl,-rpath,.>  )
 target_link_libraries(${PROJECT_NAME}  PRIVATE $<$<CXX_COMPILER_ID:MSVC>:wsock32>  $<$<CXX_COMPILER_ID:MSVC>:ws2_32>)
 
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Andreas Langhoff") # required
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+include(CPack)
 
+
+if(NOT INSTALL_DIR)
 if(WIN32)
-set(install_dir $ENV{HOMEDRIVE}$ENV{HOMEPATH})
+set(INSTALL_DIR $ENV{HOMEDRIVE}$ENV{HOMEPATH})
 else()
-set(install_dir ~/)
+set(INSTALL_DIR ~/)
 endif()
-
+endif()
 
 install(
     TARGETS ${PROJECT_NAME}
-       RUNTIME  DESTINATION ${install_dir}
+       RUNTIME  DESTINATION ${INSTALL_DIR}
 )
 install(
     TARGETS dyad
-       RUNTIME  DESTINATION ${install_dir}
-       LIBRARY DESTINATION ${install_dir}
+       RUNTIME  DESTINATION ${INSTALL_DIR}
+       LIBRARY DESTINATION ${INSTALL_DIR}
 )
    
